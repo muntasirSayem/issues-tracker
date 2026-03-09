@@ -51,8 +51,22 @@
             </div>
         </div>
     </header>
+    <main class="bg-[#F8FAFC] min-h-screen px-4 lg:px-0 py-15">
+        <section class="mx-auto">
+            <!-- 3 buttons of 3 tabs -->
+            <div
+                class=" max-w-277.5 flex flex-col lg:flex-row gap-2 items-center bg-white rounded-lg shadow-[0_1px_6px_rgba(0,0,0,0.08)] p-6 mx-auto mb-4">
+                <button onclick="allIssues()" id="allBtn"
+                    class="btn w-30 h-10 text-[1rem] font-semibold text-white bg-[#4A00FF] rounded border border-[#E4E4E7] cursor-pointer">All</button>
+                <button onclick="showOpen()" id="openBtn" class=" btn w-30 h-10 text-[1rem] font-semibold text-[#64748B] bg-white rounded border
+                    border-[#E4E4E7] cursor-pointer">Open</button>
+                <button onclick="showClosed()" id="closedBtn" class=" btn w-30 h-10 text-[1rem] font-semibold text-[#64748B] bg-white border border-[#E4E4E7]
+                    rounded cursor-pointer">Closed</button>
+            </div>
 
-    
+
+    </main>
+
 
     <!-- JavaScript -->
     <script src="./script/home.js"></script>
