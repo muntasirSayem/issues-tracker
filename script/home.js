@@ -117,7 +117,7 @@ const displayIssuesByStatus = (issues, status = "all") => {
         // create issue card 
         const issueCard = document.createElement("div");
         issueCard.innerHTML = `
-        <div id="${issue.id}" onclick="loadIssueDetail(${issue.id})" class="bg-white rounded h-full ${issue.status === "open"
+        <div id="${issue.id}" onclick="loadIssueDetail(${issue.id})" class="bg-white rounded h-full cursor-pointer ${issue.status === "open"
                 ? "border-t-4 border-t-[#00A96E]"
                 : "border-t-4 border-t-[#A855F7]"} shadow-[0_3px_6px_rgba(0,0,0,0.08)]">
             
