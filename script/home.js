@@ -121,3 +121,58 @@ const displayIssuesByStatus = (issues, status = "all") => {
         container.appendChild(issueCard);
     });
 }
+
+
+// modal--------------->
+const loadIssueDetail = async (id) => {
+    const url = "https://phi-lab-server.vercel.app/api/v1/lab/issues";
+    const res = await fetch(url);
+    const json = await res.json();
+    displayIssueDetails(json.data.find(issue => issue.id === id));
+};
+
+const displayIssueDetails = (issue) => {
+
+    // label style
+    let getLabelBg = (label) => label === "bug" ? "bg-[#FEECEC] border border-[#FECACA] text-[#EF4444] font-medium text-[0.75rem] py-1.5 px-2" :
+        label === "good first issue" ? "bg-gray-100 border border-gray-300 text-gray-600 font-medium text-[0.75rem] py-1.5 px-2" :
+            label === "enhancement" ? "bg-[#DEFCE8] border border-[#BBF7D0] text-[#00A96E] font-medium text-[0.75rem] py-1.5 px-2" :
+                label === "help wanted" ? "bg-[#FFF8DB] border border-[#FDE68A] text-[#D97706] font-medium text-[0.75rem] py-1.5 px-2" :
+                    label === "documentation" ? "bg-blue-100 border border-blue-200 text-blue-600 font-medium text-[0.75rem] py-1.5 px-2" :
+                        "bg-red-300";
+
+    const label1Bg = issue.labels[0] ? getLabelBg(issue.labels[0]) : "";
+    const label2Bg = issue.labels[1] ? getLabelBg(issue.labels[1]) : "";
+
+    const detailsBox = document.getElementById("details-container");
+    detailsBox.innerHTML = `
+    <h1 class="text-[#1F2937] text-[1.5rem] font-bold mb-2">${issue.title}</h1>
+                    <div class="flex gap-1 items-center mb-6">
+                        <button class="text-white text-[0.75rem] font-medium ${issue.status === 'open'
+            ? 'bg-[#00A96E]'
+            : 'bg-[#A855F7]'} rounded-full w-15 h-6">${issue.status === 'open' ? 'Opened' : 'Closed'}</button>
+                        <p class="text-[#64748B] text-[0.75rem]">● ${issue.status === 'open' ? 'Opened' : 'Closed'} by <span>${issue.author}</span> ● ${issue.createdAt}</p>
+                    </div>
+                    ${issue.labels[0] ? `<button
+                        class="${label1Bg} p-1 rounded-full">${issue.labels[0].toUpperCase()}</button>` : ""}
+                    ${issue.labels[1] ? `<button
+                        class="${label2Bg} p-1 rounded-full">${issue.labels[1].toUpperCase()}</button>` : ""}
+                    <p class="text-[#64748B] text-[1rem] my-6">${issue.description}</p>
+                    <div class="bg-[#F8FAFC] grid grid-cols-2 p-4 rounded-lg">
+                        <div>
+                            <h4 class="text-[1rem] text-[#64748B]">Assignee:</h4>
+                            <h4 class="text-[1rem] text-[#1F2937] font-semibold">${issue.author}</h4>
+                        </div>
+                        <div>
+                            <h4 class="text-[1rem] text-[#64748B]">Priority:</h4>
+                            <button class="h-6 w-20 text-[0.75rem] font-medium rounded-full 
+                    ${issue.priority === 'high' ? 'bg-[#EF4444] text-white' :
+            issue.priority === 'medium' ? 'bg-[#F59E0B] text-white' :
+                'bg-[#9CA3AF] text-white'}">
+                                ${issue.priority.toUpperCase()}
+                            </button>
+                        </div>
+                    </div>
+                    `;
+    document.getElementById("issue_modal").showModal();
+};
