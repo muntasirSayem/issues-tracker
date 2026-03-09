@@ -67,3 +67,57 @@ async function showClosed() {
 
 
 allIssues();
+
+
+const displayIssuesByStatus = (issues, status = "all") => {
+    // container
+    const containerId = status === "open" ? "openIssue" : status === "closed" ? "closedIssue" : "issueContainer";
+    const container = document.getElementById(containerId);
+    container.innerHTML = "";
+
+    issues.forEach(issue => {
+        if (status !== "all" && issue.status !== status) return;
+
+        // label style
+        let getLabelBg = (label) => label === "bug" ? "bg-[#FEECEC] border border-[#FECACA] text-[#EF4444] font-medium text-[0.75rem] py-1.5 px-2" :
+            label === "good first issue" ? "bg-gray-100 border border-gray-300 text-gray-600 font-medium text-[0.75rem] py-1.5 px-2" :
+                label === "enhancement" ? "bg-[#DEFCE8] border border-[#BBF7D0] text-[#00A96E] font-medium text-[0.75rem] py-1.5 px-2" :
+                    label === "help wanted" ? "bg-[#FFF8DB] border border-[#FDE68A] text-[#D97706] font-medium text-[0.75rem] py-1.5 px-2" :
+                        label === "documentation" ? "bg-blue-100 border border-blue-200 text-blue-600 font-medium text-[0.75rem] py-1.5 px-2" :
+                            "bg-red-300";
+
+        const label1Bg = issue.labels[0] ? getLabelBg(issue.labels[0]) : "";
+        const label2Bg = issue.labels[1] ? getLabelBg(issue.labels[1]) : "";
+
+        // create issue card 
+        const issueCard = document.createElement("div");
+        issueCard.innerHTML = `
+        <div id="${issue.id}" onclick="loadIssueDetail(${issue.id})" class="bg-white rounded h-full ${issue.status === "open"
+                ? "border-t-4 border-t-[#00A96E]"
+                : "border-t-4 border-t-[#A855F7]"} shadow-[0_3px_6px_rgba(0,0,0,0.08)]">
+            
+                <div class="flex justify-end mt-4 mr-4">
+                    <button class="h-6 w-20 text-[0.75rem] font-medium rounded-full 
+                    ${issue.priority === 'high' ? 'bg-[#FEECEC] text-[#EF4444]' :
+                issue.priority === 'medium' ? 'bg-[#FFF6D1] text-[#F59E0B]' :
+                    'bg-[#EEEFF2] text-[#9CA3AF]'}">
+                    ${issue.priority.toUpperCase()}
+                    </button>
+                </div>
+                <div class="space-y-3 p-4">
+                    <h1 class="text-[0.875rem] font-semibold text-[#1F2937]">${issue.title}</h1>
+                    <p class="text-[#64748B] text-[0.75rem]">${issue.description}</p>
+                    ${issue.labels[0] ? `<button class="${label1Bg} p-1 rounded-full">${issue.labels[0].toUpperCase()}</button>` : ""}
+                    ${issue.labels[1] ? `<button class="${label2Bg} p-1 rounded-full">${issue.labels[1].toUpperCase()}</button>` : ""}
+                </div>
+                <hr class="text-[#E4E4E7]">    
+                <div class="space-y-3 p-4 text-[#64748B] text-[0.75rem]">
+                    <p>#${issue.id} by ${issue.author}</p>
+                    <p>${issue.createdAt}</p>
+                </div>
+            
+        </div>`;
+
+        container.appendChild(issueCard);
+    });
+}
