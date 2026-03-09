@@ -16,6 +16,19 @@ function activeButton(btn) {
     btn.classList.add("text-white", "bg-[#4A00FF]");
 }
 
+// loading spinner
+const manageSpinner = (show, id = "issueContainer") => {
+    let container = document.getElementById(id);
+    const spinner = document.getElementById("spinner");
+
+    if (show === true) {
+        spinner.classList.remove("hidden");
+        container.classList.add("hidden");
+    } else {
+        spinner.classList.add("hidden");
+        container.classList.remove("hidden");
+    }
+};
 
 // update count-------------->
 const issueCount = document.getElementById("issueCount");
@@ -28,6 +41,8 @@ function updateCount(id) {
 async function allIssues() {
     activeButton(allBtn);
 
+    manageSpinner(true, "issueContainer");
+
     document.getElementById('issueContainer').classList.remove('hidden');
     document.getElementById('openIssue').classList.add('hidden');
     document.getElementById('closedIssue').classList.add('hidden');
@@ -37,10 +52,14 @@ async function allIssues() {
     displayIssuesByStatus(json.data);
 
     updateCount("issueContainer");
+
+    manageSpinner(false, "issueContainer");
 }
 
 async function showOpen() {
     activeButton(openBtn);
+
+    manageSpinner(true, "openIssue");
 
     document.getElementById('issueContainer').classList.add('hidden');
     document.getElementById('openIssue').classList.remove('hidden');
@@ -50,10 +69,14 @@ async function showOpen() {
     const json = await res.json();
     displayIssuesByStatus(json.data, "open");
     updateCount("openIssue");
+
+    manageSpinner(false, "openIssue");
 }
 
 async function showClosed() {
     activeButton(closedBtn);
+
+    manageSpinner(true, "closedIssue");
 
     document.getElementById('issueContainer').classList.add('hidden');
     document.getElementById('openIssue').classList.add('hidden');
@@ -63,6 +86,8 @@ async function showClosed() {
     const json = await res.json();
     displayIssuesByStatus(json.data, "closed");
     updateCount("closedIssue");
+
+    manageSpinner(false, "closedIssue");
 }
 
 
