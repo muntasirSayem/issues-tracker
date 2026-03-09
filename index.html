@@ -22,10 +22,10 @@
         }
     </style>
 
-    <title>Issues Tracker</title>
+    <title>Login | Issues Tracker</title>
 </head>
 
-<body class="bg-[#F8FAFC] min-h-screen py-20 lg:py-32">
+<body class="bg-[#F8FAFC] min-h-screen py-10 lg:py-20">
 
     <section class="px-5 lg:px-0">
         <form class="fieldset bg-white rounded-lg max-w-130 p-6 shadow-[0_5px_10px_rgba(0,0,0,0.08)]  mx-auto">
@@ -36,15 +36,17 @@
             </div>
 
             <label class="label text-[#1F2937] text-[1rem] font-medium">Username</label>
-            <input type="" class="input w-full text-[#64748B] text-[1rem]" placeholder="Enter Username" />
+            <input id="username" type="text" class="input w-full text-[#000000] text-[1rem]"
+                placeholder="Enter Username" />
             <p class="text-[0.875rem] text-[#4A00FF]">Default: admin</p>
 
             <label class="label text-[#1F2937] text-[1rem] font-medium mt-2">Password</label>
-            <input type="password" class="input w-full text-[#64748B] text-[1rem]" placeholder="Enter Password" />
+            <input id="password" type="password" class="input w-full text-[#000000] text-[1rem]"
+                placeholder="Enter Password" />
             <p class="text-[0.875rem] text-[#4A00FF]">Default: admin123</p>
 
 
-            <button class="btn bg-[#4A00FF] rounded-lg text-white text-[1rem] font-semibold
+            <button id="signInBtn" class="btn bg-[#4A00FF] rounded-lg text-white text-[1rem] font-semibold
          p-6 mt-4">Sign in</button>
 
             <section>
@@ -62,6 +64,9 @@
             </section>
         </form>
     </section>
+
+    <!-- JavaScript -->
+    <script src="./script/login.js"></script>
 </body>
 
 </html>
